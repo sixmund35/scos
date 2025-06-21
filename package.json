@@ -1,0 +1,43 @@
+{
+  "name": "screen-cloud",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "preparsdsddsde": "chmod +x ./scripts/prepare.sh && ./scripts/prepare.sh",
+    "lint": "eslint . --ext .ts",
+    "format": "prettier --write .",
+    "start": "bun index.ts",
+    "dev": "bun run --watch src/index.ts",
+    "db:generate": "bunx prisma generate",
+    "db:migrate": "bunx prisma migrate dev",
+    "db:deploy": "bunx prisma deploy",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.29.0",
+    "@types/bun": "latest",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.0.3",
+    "eslint": "^9.29.0",
+    "globals": "^16.2.0",
+    "husky": "^9.1.7",
+    "prettier": "^3.5.3",
+    "prisma": "^6.10.1",
+    "ts-node": "^10.9.2",
+    "typescript-eslint": "^8.34.1"
+  },
+  "peerDependencies": {
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.10.1",
+    "@prisma/extension-accelerate": "^2.0.1",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "inversify": "^7.0.0-alpha.5",
+    "pg": "^8.16.2",
+    "reflect-metadata": "^0.2.2"
+  }
+}
