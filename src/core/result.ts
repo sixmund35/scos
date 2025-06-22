@@ -14,3 +14,11 @@ export const badRequestResult = <T>(data: T, errors: unknown): IResult<T> => {
     errors,
   };
 };
+
+export const notFoundResult = <T>(data: T, errors: unknown): IResult<T> => {
+  return {
+    data,
+    statusCode: 404,
+    errors,
+  };
+};

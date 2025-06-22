@@ -1,4 +1,5 @@
 import express from 'express';
+import 'zod-openapi/extend';
 import { loader } from './core/loader';
 
 const app = express();

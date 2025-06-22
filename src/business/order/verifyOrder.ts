@@ -6,7 +6,7 @@ import { GetShippingCost } from '../shipping/getShippingCost';
 import { Repository } from '@/core/repository';
 import { WeightUnit } from '@/enums/weightUnit';
 import { CalculateDiscount } from './calculateDiscount';
-import { badRequestResult, successResult } from '@/core/result';
+import { notFoundResult, successResult } from '@/core/result';
 
 interface Device {
   id: number;
@@ -44,7 +44,7 @@ export class VerifyOrder
     const orderItems = this.merge(devices, request.items);
 
     if (!orderItems) {
-      return badRequestResult({} as VerifyOrderResponse, 'Device id not found');
+      return notFoundResult({} as VerifyOrderResponse, 'Device id not found');
     }
 
     const shippingCost = await this.getShippingCost.execute({
