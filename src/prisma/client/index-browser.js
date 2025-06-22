@@ -177,7 +177,8 @@ exports.Prisma.OrderScalarFieldEnum = {
   status: 'status',
   discount: 'discount',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  shippingCost: 'shippingCost'
 };
 
 exports.Prisma.OrderLineScalarFieldEnum = {

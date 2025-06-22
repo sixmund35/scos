@@ -94,14 +94,15 @@ model ShippingRate {
 }
 
 model Order {
-  id        Int         @id @default(autoincrement())
-  userId    Int         @map("user_id")
-  user      User        @relation(fields: [userId], references: [id])
-  status    Int
-  discount  Float
-  createdAt DateTime    @default(now()) @map("created_at")
-  updatedAt DateTime    @updatedAt @map("updated_at")
-  OrderLine OrderLine[]
+  id           Int         @id @default(autoincrement())
+  userId       Int         @map("user_id")
+  user         User        @relation(fields: [userId], references: [id])
+  status       Int
+  discount     Float
+  createdAt    DateTime    @default(now()) @map("created_at")
+  updatedAt    DateTime    @updatedAt @map("updated_at")
+  shippingCost Float       @default(0) @map("shipping_cost")
+  OrderLine    OrderLine[]
 
   @@map("orders")
 }

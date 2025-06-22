@@ -8356,6 +8356,7 @@ export namespace Prisma {
     userId: number | null
     status: number | null
     discount: number | null
+    shippingCost: number | null
   }
 
   export type OrderSumAggregateOutputType = {
@@ -8363,6 +8364,7 @@ export namespace Prisma {
     userId: number | null
     status: number | null
     discount: number | null
+    shippingCost: number | null
   }
 
   export type OrderMinAggregateOutputType = {
@@ -8372,6 +8374,7 @@ export namespace Prisma {
     discount: number | null
     createdAt: Date | null
     updatedAt: Date | null
+    shippingCost: number | null
   }
 
   export type OrderMaxAggregateOutputType = {
@@ -8381,6 +8384,7 @@ export namespace Prisma {
     discount: number | null
     createdAt: Date | null
     updatedAt: Date | null
+    shippingCost: number | null
   }
 
   export type OrderCountAggregateOutputType = {
@@ -8390,6 +8394,7 @@ export namespace Prisma {
     discount: number
     createdAt: number
     updatedAt: number
+    shippingCost: number
     _all: number
   }
 
@@ -8399,6 +8404,7 @@ export namespace Prisma {
     userId?: true
     status?: true
     discount?: true
+    shippingCost?: true
   }
 
   export type OrderSumAggregateInputType = {
@@ -8406,6 +8412,7 @@ export namespace Prisma {
     userId?: true
     status?: true
     discount?: true
+    shippingCost?: true
   }
 
   export type OrderMinAggregateInputType = {
@@ -8415,6 +8422,7 @@ export namespace Prisma {
     discount?: true
     createdAt?: true
     updatedAt?: true
+    shippingCost?: true
   }
 
   export type OrderMaxAggregateInputType = {
@@ -8424,6 +8432,7 @@ export namespace Prisma {
     discount?: true
     createdAt?: true
     updatedAt?: true
+    shippingCost?: true
   }
 
   export type OrderCountAggregateInputType = {
@@ -8433,6 +8442,7 @@ export namespace Prisma {
     discount?: true
     createdAt?: true
     updatedAt?: true
+    shippingCost?: true
     _all?: true
   }
 
@@ -8529,6 +8539,7 @@ export namespace Prisma {
     discount: number
     createdAt: Date
     updatedAt: Date
+    shippingCost: number
     _count: OrderCountAggregateOutputType | null
     _avg: OrderAvgAggregateOutputType | null
     _sum: OrderSumAggregateOutputType | null
@@ -8557,6 +8568,7 @@ export namespace Prisma {
     discount?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    shippingCost?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     OrderLine?: boolean | Order$OrderLineArgs<ExtArgs>
     _count?: boolean | OrderCountOutputTypeDefaultArgs<ExtArgs>
@@ -8569,6 +8581,7 @@ export namespace Prisma {
     discount?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    shippingCost?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["order"]>
 
@@ -8579,6 +8592,7 @@ export namespace Prisma {
     discount?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    shippingCost?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["order"]>
 
@@ -8589,9 +8603,10 @@ export namespace Prisma {
     discount?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    shippingCost?: boolean
   }
 
-  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "status" | "discount" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
+  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "status" | "discount" | "createdAt" | "updatedAt" | "shippingCost", ExtArgs["result"]["order"]>
   export type OrderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     OrderLine?: boolean | Order$OrderLineArgs<ExtArgs>
@@ -8617,6 +8632,7 @@ export namespace Prisma {
       discount: number
       createdAt: Date
       updatedAt: Date
+      shippingCost: number
     }, ExtArgs["result"]["order"]>
     composites: {}
   }
@@ -9048,6 +9064,7 @@ export namespace Prisma {
     readonly discount: FieldRef<"Order", 'Float'>
     readonly createdAt: FieldRef<"Order", 'DateTime'>
     readonly updatedAt: FieldRef<"Order", 'DateTime'>
+    readonly shippingCost: FieldRef<"Order", 'Float'>
   }
     
 
@@ -10691,7 +10708,8 @@ export namespace Prisma {
     status: 'status',
     discount: 'discount',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    shippingCost: 'shippingCost'
   };
 
   export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]
@@ -11170,6 +11188,7 @@ export namespace Prisma {
     discount?: FloatFilter<"Order"> | number
     createdAt?: DateTimeFilter<"Order"> | Date | string
     updatedAt?: DateTimeFilter<"Order"> | Date | string
+    shippingCost?: FloatFilter<"Order"> | number
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     OrderLine?: OrderLineListRelationFilter
   }
@@ -11181,6 +11200,7 @@ export namespace Prisma {
     discount?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    shippingCost?: SortOrder
     user?: UserOrderByWithRelationInput
     OrderLine?: OrderLineOrderByRelationAggregateInput
   }
@@ -11195,6 +11215,7 @@ export namespace Prisma {
     discount?: FloatFilter<"Order"> | number
     createdAt?: DateTimeFilter<"Order"> | Date | string
     updatedAt?: DateTimeFilter<"Order"> | Date | string
+    shippingCost?: FloatFilter<"Order"> | number
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     OrderLine?: OrderLineListRelationFilter
   }, "id">
@@ -11206,6 +11227,7 @@ export namespace Prisma {
     discount?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    shippingCost?: SortOrder
     _count?: OrderCountOrderByAggregateInput
     _avg?: OrderAvgOrderByAggregateInput
     _max?: OrderMaxOrderByAggregateInput
@@ -11223,6 +11245,7 @@ export namespace Prisma {
     discount?: FloatWithAggregatesFilter<"Order"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Order"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Order"> | Date | string
+    shippingCost?: FloatWithAggregatesFilter<"Order"> | number
   }
 
   export type OrderLineWhereInput = {
@@ -11649,6 +11672,7 @@ export namespace Prisma {
     discount: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    shippingCost?: number
     user: UserCreateNestedOneWithoutOrderInput
     OrderLine?: OrderLineCreateNestedManyWithoutOrderInput
   }
@@ -11660,6 +11684,7 @@ export namespace Prisma {
     discount: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    shippingCost?: number
     OrderLine?: OrderLineUncheckedCreateNestedManyWithoutOrderInput
   }
 
@@ -11668,6 +11693,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    shippingCost?: FloatFieldUpdateOperationsInput | number
     user?: UserUpdateOneRequiredWithoutOrderNestedInput
     OrderLine?: OrderLineUpdateManyWithoutOrderNestedInput
   }
@@ -11679,6 +11705,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    shippingCost?: FloatFieldUpdateOperationsInput | number
     OrderLine?: OrderLineUncheckedUpdateManyWithoutOrderNestedInput
   }
 
@@ -11689,6 +11716,7 @@ export namespace Prisma {
     discount: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    shippingCost?: number
   }
 
   export type OrderUpdateManyMutationInput = {
@@ -11696,6 +11724,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    shippingCost?: FloatFieldUpdateOperationsInput | number
   }
 
   export type OrderUncheckedUpdateManyInput = {
@@ -11705,6 +11734,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    shippingCost?: FloatFieldUpdateOperationsInput | number
   }
 
   export type OrderLineCreateInput = {
@@ -12200,6 +12230,7 @@ export namespace Prisma {
     discount?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    shippingCost?: SortOrder
   }
 
   export type OrderAvgOrderByAggregateInput = {
@@ -12207,6 +12238,7 @@ export namespace Prisma {
     userId?: SortOrder
     status?: SortOrder
     discount?: SortOrder
+    shippingCost?: SortOrder
   }
 
   export type OrderMaxOrderByAggregateInput = {
@@ -12216,6 +12248,7 @@ export namespace Prisma {
     discount?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    shippingCost?: SortOrder
   }
 
   export type OrderMinOrderByAggregateInput = {
@@ -12225,6 +12258,7 @@ export namespace Prisma {
     discount?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    shippingCost?: SortOrder
   }
 
   export type OrderSumOrderByAggregateInput = {
@@ -12232,6 +12266,7 @@ export namespace Prisma {
     userId?: SortOrder
     status?: SortOrder
     discount?: SortOrder
+    shippingCost?: SortOrder
   }
 
   export type OrderScalarRelationFilter = {
@@ -12794,6 +12829,7 @@ export namespace Prisma {
     discount: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    shippingCost?: number
     OrderLine?: OrderLineCreateNestedManyWithoutOrderInput
   }
 
@@ -12803,6 +12839,7 @@ export namespace Prisma {
     discount: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    shippingCost?: number
     OrderLine?: OrderLineUncheckedCreateNestedManyWithoutOrderInput
   }
 
@@ -12842,6 +12879,7 @@ export namespace Prisma {
     discount?: FloatFilter<"Order"> | number
     createdAt?: DateTimeFilter<"Order"> | Date | string
     updatedAt?: DateTimeFilter<"Order"> | Date | string
+    shippingCost?: FloatFilter<"Order"> | number
   }
 
   export type DiscountCreateWithoutDeviceInput = {
@@ -13295,6 +13333,7 @@ export namespace Prisma {
     discount: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    shippingCost?: number
     user: UserCreateNestedOneWithoutOrderInput
   }
 
@@ -13305,6 +13344,7 @@ export namespace Prisma {
     discount: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    shippingCost?: number
   }
 
   export type OrderCreateOrConnectWithoutOrderLineInput = {
@@ -13354,6 +13394,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    shippingCost?: FloatFieldUpdateOperationsInput | number
     user?: UserUpdateOneRequiredWithoutOrderNestedInput
   }
 
@@ -13364,6 +13405,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    shippingCost?: FloatFieldUpdateOperationsInput | number
   }
 
   export type DeviceUpsertWithoutOrderLineInput = {
@@ -13404,6 +13446,7 @@ export namespace Prisma {
     discount: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    shippingCost?: number
   }
 
   export type OrderUpdateWithoutUserInput = {
@@ -13411,6 +13454,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    shippingCost?: FloatFieldUpdateOperationsInput | number
     OrderLine?: OrderLineUpdateManyWithoutOrderNestedInput
   }
 
@@ -13420,6 +13464,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    shippingCost?: FloatFieldUpdateOperationsInput | number
     OrderLine?: OrderLineUncheckedUpdateManyWithoutOrderNestedInput
   }
 
@@ -13429,6 +13474,7 @@ export namespace Prisma {
     discount?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    shippingCost?: FloatFieldUpdateOperationsInput | number
   }
 
   export type DiscountCreateManyDeviceInput = {

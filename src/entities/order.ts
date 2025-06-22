@@ -16,5 +16,7 @@ export class Order {
 
   updatedAt: Date;
 
+  shippingCost: number;
+
   OrderLine: OrderLine[];
 }
