@@ -9,8 +9,9 @@ import { GetAllShippingRate } from './getAllShippingRate';
 import { ShippingRateType } from '@/enums/shippingRateType';
 import { convert } from '@/helper/weightConverter';
 import { WeightUnit } from '@/enums/weightUnit';
-import { successResult } from '@/core/result';
+import { badRequestResult, successResult } from '@/core/result';
 import type { ShippingRate } from '@/entities/shipping_rate';
+import { sumBy } from 'lodash';
 
 type ShippingLocation = {
   lat: number;
@@ -49,6 +50,13 @@ export class GetShippingCost
         lng: request.lng,
       });
 
+      if (!shippingDetail) {
+        return badRequestResult(
+          {} as GetShippingCostResponse,
+          'Requested quantity is higher than stock',
+        );
+      }
+
       // There is only 1 rate for now
       const rate = shippingRates.data.rates[0]!;
 
@@ -74,17 +82,25 @@ export class GetShippingCost
       deviceId: number;
     },
     shippingAddress: ShippingLocation,
-  ): { weight: number; distance: number }[] {
-    let remainingQuantity = item.quantity;
+  ): { weight: number; distance: number }[] | null {
+    let remainingRequestedQuantity = item.quantity;
+
+    const requestedQuantityIsHigherThanStock =
+      remainingRequestedQuantity >
+      sumBy(warehouseWithStock, st => st.stock.quantity);
+    if (requestedQuantityIsHigherThanStock) {
+      return null;
+    }
+
     const result: { weight: number; distance: number }[] = [];
 
     for (const warehouse of warehouseWithStock) {
-      if (remainingQuantity <= 0) {
+      if (remainingRequestedQuantity <= 0) {
         break;
       }
 
       const quantityToTake = Math.min(
-        remainingQuantity,
+        remainingRequestedQuantity,
         warehouse.stock.quantity,
       );
 
@@ -105,7 +121,7 @@ export class GetShippingCost
           weight: weightInKg,
         });
 
-        remainingQuantity -= quantityToTake;
+        remainingRequestedQuantity -= quantityToTake;
       }
     }
 

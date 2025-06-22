@@ -6,7 +6,7 @@ import { GetShippingCost } from '../shipping/getShippingCost';
 import { Repository } from '@/core/repository';
 import { WeightUnit } from '@/enums/weightUnit';
 import { CalculateDiscount } from './calculateDiscount';
-import { notFoundResult, successResult } from '@/core/result';
+import { badRequestResult, notFoundResult, successResult } from '@/core/result';
 
 interface Device {
   id: number;
@@ -59,6 +59,10 @@ export class VerifyOrder
         };
       }),
     });
+
+    if (shippingCost.errors) {
+      return badRequestResult({} as VerifyOrderResponse, shippingCost.errors);
+    }
 
     const discount = await this.calculateDiscount.execute({
       items: request.items.map(item => {
