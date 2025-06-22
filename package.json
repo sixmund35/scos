@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "prepare": "chmod +x ./scripts/prepare.sh && ./scripts/prepare.sh",
+    "setup": "chmod +x ./scripts/prepare.sh && ./scripts/prepare.sh",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write .",
     "start": "bun index.ts",

@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-namespace */
+
 import { User as _User } from './user';
 import { Device as _Device } from './device';
 import { Warehouse as _Warehouse } from './warehouse';

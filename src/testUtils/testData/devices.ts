@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Device } from '@/entities/device';
 import { Currency } from '@/enums/currency';
 import { WeightUnit } from '@/enums/weightUnit';
