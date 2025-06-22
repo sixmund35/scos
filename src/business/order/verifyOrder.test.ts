@@ -6,6 +6,8 @@ import { CalculateDiscount } from './calculateDiscount';
 import type { Repository } from '@/core/repository';
 import { mockDevices } from '@/testUtils/testData/devices';
 import { VerifyOrder } from './verifyOrder';
+import type { IResult } from '@/core/interfaces/IResult';
+import type { VerifyOrderResponse } from '@/dtos/order/verifyOrder.response';
 
 describe('verifyOrder', () => {
   test('order is valid when the shipping cost is not more than 15% of the total price', async () => {
@@ -33,7 +35,7 @@ describe('verifyOrder', () => {
       },
     });
 
-    expect(response.data).toEqual({
+    expect((response as IResult<VerifyOrderResponse>).data).toEqual({
       total: 2090,
       shippingCost: 100,
       discount: 10,
@@ -67,7 +69,7 @@ describe('verifyOrder', () => {
       },
     });
 
-    expect(response.data).toEqual({
+    expect((response as IResult<VerifyOrderResponse>).data).toEqual({
       total: 2340,
       shippingCost: 350,
       discount: 10,

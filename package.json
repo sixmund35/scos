@@ -12,7 +12,8 @@
     "db:generate": "bunx prisma generate",
     "db:migrate": "bunx prisma migrate dev",
     "db:deploy": "bunx prisma deploy",
-    "db:seed": "bun prisma/seed.ts"
+    "db:seed": "bun prisma/seed.ts",
+    "type-check": "bunx tsc --noEmit"
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",

@@ -1,24 +1,32 @@
-import type { IResult } from './interfaces/iOperation';
+import type { IErrors } from './interfaces/IErrors';
+import type { IFailureResult, IResult } from './interfaces/IResult';
 
 export const successResult = <T>(data: T): IResult<T> => {
   return {
     statusCode: 200,
     data,
+    success: true,
   };
 };
 
-export const badRequestResult = <T>(data: T, errors: unknown): IResult<T> => {
+export const badRequestResult = (errors: IErrors): IFailureResult => {
   return {
-    data,
     statusCode: 400,
     errors,
+    success: false,
   };
 };
 
-export const notFoundResult = <T>(data: T, errors: unknown): IResult<T> => {
+export const notFoundResult = (errors: IErrors): IFailureResult => {
   return {
-    data,
+    success: false,
     statusCode: 404,
     errors,
   };
+};
+
+export const isFailureResult = (
+  result: IResult<unknown> | IFailureResult,
+): result is IFailureResult => {
+  return !result.success;
 };

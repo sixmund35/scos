@@ -10,7 +10,7 @@ export const errorHandler = (
   next: NextFunction,
 ): void => {
   if (err instanceof ZodError || err.name === 'ZodError') {
-    respond(res, badRequestResult({}, (err as ZodError).issues));
+    respond(res, badRequestResult({ issues: (err as ZodError).issues }));
   } else {
     res.status(500).send({
       message: 'Error occurred',

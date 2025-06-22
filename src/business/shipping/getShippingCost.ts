@@ -1,6 +1,6 @@
 import { GetAllWarehouseByDeviceId } from '../warehouse/getAllWarehouseByDeviceId';
 import { inject, injectable } from 'inversify';
-import type { IAsyncOperation, IResult } from '@/core/interfaces/iOperation';
+import type { IAsyncOperation } from '@/core/interfaces/IOperation';
 import type { GetShippingCostRequest } from '@/dtos/shipping/getShippingCost.request';
 import type { GetShippingCostResponse } from '@/dtos/shipping/getShippingCost.response';
 import { getDistance } from 'geolib';
@@ -12,6 +12,7 @@ import { WeightUnit } from '@/enums/weightUnit';
 import { badRequestResult, successResult } from '@/core/result';
 import type { ShippingRate } from '@/entities/shipping_rate';
 import { sumBy } from 'lodash';
+import type { IResult, IFailureResult } from '@/core/interfaces/IResult';
 
 type ShippingLocation = {
   lat: number;
@@ -31,7 +32,7 @@ export class GetShippingCost
 
   async execute(
     request: GetShippingCostRequest,
-  ): Promise<IResult<GetShippingCostResponse>> {
+  ): Promise<IResult<GetShippingCostResponse> | IFailureResult> {
     const shippingRates = await this.getAllShippingRates.execute();
     let totalShippingCost = 0;
 
@@ -51,10 +52,9 @@ export class GetShippingCost
       });
 
       if (!shippingDetail) {
-        return badRequestResult(
-          {} as GetShippingCostResponse,
-          'Requested quantity is higher than stock',
-        );
+        return badRequestResult({
+          summary: 'Requested quantity is higher than stock',
+        });
       }
 
       // There is only 1 rate for now

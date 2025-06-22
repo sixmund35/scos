@@ -1,8 +1,9 @@
 import { inject, injectable } from 'inversify';
-import type { IAsyncOperation, IResult } from '@/core/interfaces/iOperation';
+import type { IAsyncOperation } from '@/core/interfaces/IOperation';
 import type { GetAllShippingRateResponse } from '@/dtos/shipping/getAllShippingRate.response';
 import { Repository } from '@/core/repository';
 import { successResult } from '@/core/result';
+import type { IResult } from '@/core/interfaces/IResult';
 
 @injectable('Request')
 export class GetAllShippingRate

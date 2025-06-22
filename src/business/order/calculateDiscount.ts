@@ -1,4 +1,5 @@
-import type { IAsyncOperation, IResult } from '@/core/interfaces/iOperation';
+import type { IAsyncOperation } from '@/core/interfaces/IOperation';
+import type { IResult } from '@/core/interfaces/IResult';
 import { Repository } from '@/core/repository';
 import { successResult } from '@/core/result';
 import type { CalculateDiscountRequest } from '@/dtos/order/calculateDiscount.request';

@@ -10,6 +10,8 @@ import type { WarehouseResponse } from '@/dtos/warehouse/warehouse.response';
 import type { Repository } from '@/core/repository';
 import { mockWarehouses } from '@/testUtils/testData/warehouses';
 import { mockShippingRates } from '@/testUtils/testData/shippingRates';
+import type { IFailureResult, IResult } from '@/core/interfaces/IResult';
+import type { GetShippingCostResponse } from '@/dtos/shipping/getShippingCost.response';
 
 describe('getShippingCost', async () => {
   test('calculate shipping cost correctly', async () => {
@@ -57,7 +59,9 @@ describe('getShippingCost', async () => {
     const expectedCost =
       totalWeight * mockShippingRates.rates[0]!.price * distanceAsKm;
 
-    expect(response.data.amount).toEqual(Number(expectedCost.toFixed(2)));
+    expect((response as IResult<GetShippingCostResponse>).data.amount).toEqual(
+      Number(expectedCost.toFixed(2)),
+    );
   });
 
   test('return error when requested quantity is higher than stock', async () => {
@@ -83,10 +87,12 @@ describe('getShippingCost', async () => {
 
     const response = await getShippingCost.execute(request);
 
-    expect(response).toEqual({
-      data: expect.any(Object),
+    expect(response as IFailureResult).toEqual({
       statusCode: 400,
-      errors: expect.any(String),
+      success: false,
+      errors: {
+        summary: 'Requested quantity is higher than stock',
+      },
     });
   });
 });

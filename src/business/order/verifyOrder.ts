@@ -1,4 +1,4 @@
-import type { IAsyncOperation, IResult } from '@/core/interfaces/iOperation';
+import type { IAsyncOperation } from '@/core/interfaces/IOperation';
 import type { VerifyOrderRequest } from '@/dtos/order/verifyOrder.request';
 import type { VerifyOrderResponse } from '@/dtos/order/verifyOrder.response';
 import { inject, injectable } from 'inversify';
@@ -6,7 +6,13 @@ import { GetShippingCost } from '../shipping/getShippingCost';
 import { Repository } from '@/core/repository';
 import { WeightUnit } from '@/enums/weightUnit';
 import { CalculateDiscount } from './calculateDiscount';
-import { badRequestResult, notFoundResult, successResult } from '@/core/result';
+import {
+  badRequestResult,
+  isFailureResult,
+  notFoundResult,
+  successResult,
+} from '@/core/result';
+import type { IFailureResult, IResult } from '@/core/interfaces/IResult';
 
 interface Device {
   id: number;
@@ -21,7 +27,7 @@ type OrderItem = {
 
 @injectable('Request')
 export class VerifyOrder
-  implements IAsyncOperation<VerifyOrderRequest, VerifyOrderResponse>
+  implements IAsyncOperation<VerifyOrderRequest, VerifyOrderResponse | null>
 {
   constructor(
     @inject(GetShippingCost) private readonly getShippingCost: GetShippingCost,
@@ -32,7 +38,7 @@ export class VerifyOrder
 
   async execute(
     request: VerifyOrderRequest,
-  ): Promise<IResult<VerifyOrderResponse>> {
+  ): Promise<IResult<VerifyOrderResponse> | IFailureResult> {
     const devices = await this.repository.device.findMany({
       where: {
         id: {
@@ -44,7 +50,9 @@ export class VerifyOrder
     const orderItems = this.merge(devices, request.items);
 
     if (!orderItems) {
-      return notFoundResult({} as VerifyOrderResponse, 'Device id not found');
+      return notFoundResult({
+        summary: 'Device id not found',
+      });
     }
 
     const shippingCost = await this.getShippingCost.execute({
@@ -60,8 +68,8 @@ export class VerifyOrder
       }),
     });
 
-    if (shippingCost.errors) {
-      return badRequestResult({} as VerifyOrderResponse, shippingCost.errors);
+    if (isFailureResult(shippingCost)) {
+      return badRequestResult(shippingCost.errors);
     }
 
     const discount = await this.calculateDiscount.execute({

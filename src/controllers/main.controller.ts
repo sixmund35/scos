@@ -1,11 +1,10 @@
 import { Router } from 'express';
-import { helloWorldController } from './helloWorld.controller';
 import { orderController } from './order.controller';
 
 export function controllers(): Router {
   const router = Router();
 
-  helloWorldController(router);
+  // Register all controllers here
   orderController(router);
 
   return router;

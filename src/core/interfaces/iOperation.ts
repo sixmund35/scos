@@ -1,13 +1,9 @@
-export interface IResult<T> {
-  statusCode: number;
-  data: T;
-  errors?: unknown;
-}
+import type { IFailureResult, IResult } from './IResult';
 
 export interface IOperation<TIn, TOut> {
   execute(data?: TIn): IResult<TOut>;
 }
 
 export interface IAsyncOperation<TIn, TOut> {
-  execute(data: TIn): Promise<IResult<TOut>>;
+  execute(data: TIn): Promise<IResult<TOut> | IFailureResult>;
 }

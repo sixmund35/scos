@@ -1,11 +1,16 @@
-import type { IAsyncOperation, IResult } from '@/core/interfaces/iOperation';
+import type { IAsyncOperation } from '@/core/interfaces/IOperation';
 import type { CreateOrderRequest } from '@/dtos/order/createOrder.request';
 import type { CreateOrderResponse } from '@/dtos/order/createOrder.response';
 import { VerifyOrder } from './verifyOrder';
 import { inject, injectable } from 'inversify';
-import { badRequestResult, successResult } from '@/core/result';
+import {
+  badRequestResult,
+  isFailureResult,
+  successResult,
+} from '@/core/result';
 import { Repository } from '@/core/repository';
 import { OrderStatus } from '@/enums/orderStatus';
+import type { IResult, IFailureResult } from '@/core/interfaces/IResult';
 
 @injectable('Request')
 export class CreateOrder
@@ -18,11 +23,11 @@ export class CreateOrder
 
   async execute(
     data: CreateOrderRequest,
-  ): Promise<IResult<CreateOrderResponse>> {
+  ): Promise<IResult<CreateOrderResponse> | IFailureResult> {
     const verifyResult = await this.verifyOrder.execute(data);
 
-    if (!verifyResult.data.isValid) {
-      return badRequestResult(verifyResult.data, '');
+    if (isFailureResult(verifyResult)) {
+      return badRequestResult(verifyResult.errors);
     }
 
     // Assuming that the user is already authenticated and we can get the user from the repository
