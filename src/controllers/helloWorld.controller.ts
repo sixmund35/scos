@@ -2,6 +2,7 @@ import { Router, type Request, type Response } from 'express';
 import { resolveDependency } from '../core/registerDependencies';
 import { GetHelloWorld } from '../business/helloWorld/getHelloWorld';
 import { ThrowException } from '../business/helloWorld/throwException';
+import { respond } from '@/core/respond';
 
 export const helloWorldController = (router: Router): void => {
   const helloWorldRouter = Router();
@@ -11,13 +12,13 @@ export const helloWorldController = (router: Router): void => {
     const service = resolveDependency(GetHelloWorld) as GetHelloWorld;
     const result = await service.execute();
 
-    res.status(result.statusCode).json(result.data);
+    respond(res, result);
   });
 
   helloWorldRouter.get('/again', (req: Request, res: Response) => {
     const service = resolveDependency(ThrowException) as ThrowException;
     const result = service.execute();
 
-    res.status(result.statusCode).json(result);
+    respond(res, result);
   });
 };

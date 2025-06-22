@@ -6,6 +6,7 @@ import { GetShippingCost } from '../shipping/getShippingCost';
 import { Repository } from '@/core/repository';
 import { WeightUnit } from '@/enums/weightUnit';
 import { CalculateDiscount } from './calculateDiscount';
+import { badRequestResult, successResult } from '@/core/result';
 
 interface Device {
   id: number;
@@ -32,22 +33,6 @@ export class VerifyOrder
   async execute(
     request: VerifyOrderRequest,
   ): Promise<IResult<VerifyOrderResponse>> {
-    /**
-     * calculate shipping cost
-     *  - get all warehouses/
-     *  - find nearest warehouse/
-     *  - get all shipping cost/
-     *  - calculate shipping cost/
-     *
-     * calculate discount
-     *  - get all discount
-     *  - calculate discount
-     *
-     * verify if shipping cost doesnt exceed 15% of the order amount after discount
-     *
-     * calculate total
-     */
-
     const devices = await this.repository.device.findMany({
       where: {
         id: {
@@ -59,17 +44,11 @@ export class VerifyOrder
     const orderItems = this.merge(devices, request.items);
 
     if (!orderItems) {
-      return {
-        statusCode: 400,
-        errors: `Device id not found`,
-        // TODO: manage type
-        data: {} as VerifyOrderResponse,
-      };
+      return badRequestResult({} as VerifyOrderResponse, 'Device id not found');
     }
 
     const shippingCost = await this.getShippingCost.execute({
-      lat: request.shippingAddress.lat,
-      lng: request.shippingAddress.lng,
+      ...request.shippingAddress,
       items: request.items.map(item => {
         const device = devices.find(d => d.id === item.deviceId);
         return {
@@ -102,16 +81,13 @@ export class VerifyOrder
       discount.data,
     );
 
-    return {
-      statusCode: 200,
-      data: {
-        subTotal: subTotal,
-        discount: discount.data,
-        shippingCost: shippingCost.data.amount,
-        total: subTotal - discount.data + shippingCost.data.amount,
-        isValid: isValid,
-      },
-    };
+    return successResult({
+      subTotal,
+      isValid,
+      discount: discount.data,
+      shippingCost: shippingCost.data.amount,
+      total: subTotal - discount.data + shippingCost.data.amount,
+    });
   }
 
   verifyIfShippingCostIsValid(

@@ -2,6 +2,7 @@ import type { IAsyncOperation, IResult } from '@/core/interfaces/iOperation';
 import type { WarehouseResponse } from '../../dtos/warehouse/warehouse.response';
 import { inject, injectable } from 'inversify';
 import { Repository } from '@/core/repository';
+import { successResult } from '@/core/result';
 
 @injectable('Request')
 export class GetAllWarehouseByDeviceId
@@ -31,19 +32,13 @@ export class GetAllWarehouseByDeviceId
     });
 
     const result = warehouses.map(warehouse => ({
-      id: warehouse.id,
-      name: warehouse.name,
-      lat: warehouse.lat,
-      lng: warehouse.lng,
+      ...warehouse,
       stock: warehouse.Stock.find(stock => ({
         deviceId: stock.deviceId,
         quantity: stock.quantity,
       }))!,
     }));
 
-    return {
-      statusCode: 200,
-      data: result,
-    };
+    return successResult(result);
   }
 }

@@ -2,6 +2,7 @@ import { inject, injectable } from 'inversify';
 import type { IAsyncOperation, IResult } from '@/core/interfaces/iOperation';
 import type { GetAllShippingRateResponse } from '@/dtos/shipping/getAllShippingRate.response';
 import { Repository } from '@/core/repository';
+import { successResult } from '@/core/result';
 
 @injectable('Request')
 export class GetAllShippingRate
@@ -12,11 +13,6 @@ export class GetAllShippingRate
   async execute(): Promise<IResult<GetAllShippingRateResponse>> {
     const rates = await this.repository.shippingRate.findMany();
 
-    return {
-      statusCode: 200,
-      data: {
-        rates,
-      },
-    };
+    return successResult({ rates });
   }
 }

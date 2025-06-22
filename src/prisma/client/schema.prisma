@@ -8,6 +8,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+generator classes {
+  provider                  = "prisma-class-generator"
+  output                    = "../src/entities"
+  dryRun                    = false
+  // Optional configurations:
+  useSwagger                = false // Add swagger decorators
+  validationRules           = true // Add class-validator decorators
+  generateDto               = true // Generate DTOs in addition to entity classes
+  reExport                  = false // Generate barrel file (index.ts)
+  createModelQueryInterface = false // Generate query interfaces 
+  useRepositories           = false // Generate repository classes
+}
+
 model User {
   id         Int      @id @default(autoincrement())
   firstName  String   @map("first_name") @db.VarChar(100)

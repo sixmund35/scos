@@ -6,11 +6,11 @@ import type { GetShippingCostResponse } from '@/dtos/shipping/getShippingCost.re
 import { getDistance } from 'geolib';
 import type { WarehouseResponse } from '@/dtos/warehouse/warehouse.response';
 import { GetAllShippingRate } from './getAllShippingRate';
-import type { ShippingRate } from '@/dtos/shipping/getAllShippingRate.response';
 import { ShippingRateType } from '@/enums/shippingRateType';
 import { convert } from '@/helper/weightConverter';
 import { WeightUnit } from '@/enums/weightUnit';
-import { Repository } from '@/core/repository';
+import { successResult } from '@/core/result';
+import type { ShippingRate } from '@/entities/shipping_rate';
 
 type ShippingLocation = {
   lat: number;
@@ -26,7 +26,6 @@ export class GetShippingCost
     private readonly getAllWarehouse: GetAllWarehouseByDeviceId,
     @inject(GetAllShippingRate)
     private readonly getAllShippingRates: GetAllShippingRate,
-    @inject(Repository) private readonly repository: Repository,
   ) {}
 
   async execute(
@@ -61,12 +60,9 @@ export class GetShippingCost
       );
     }
 
-    return {
-      statusCode: 200,
-      data: {
-        amount: Number(totalShippingCost.toFixed(2)),
-      },
-    };
+    return successResult({
+      amount: Number(totalShippingCost.toFixed(2)),
+    });
   }
 
   getShippingDetails(

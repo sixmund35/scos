@@ -1,15 +1,9 @@
 import type { IAsyncOperation, IResult } from '@/core/interfaces/iOperation';
 import { Repository } from '@/core/repository';
+import { successResult } from '@/core/result';
+import type { CalculateDiscountRequest } from '@/dtos/order/calculateDiscount.request';
 import { DiscountType } from '@/enums/discountType';
 import { inject } from 'inversify';
-
-interface CalculateDiscountRequest {
-  items: {
-    deviceId: number;
-    quantity: number;
-    price: number;
-  }[];
-}
 
 export class CalculateDiscount
   implements IAsyncOperation<CalculateDiscountRequest, number>
@@ -17,7 +11,6 @@ export class CalculateDiscount
   constructor(@inject(Repository) private readonly repository: Repository) {}
 
   async execute(data: CalculateDiscountRequest): Promise<IResult<number>> {
-    // TODO: find way to generate class from query result
     const discounts = await this.repository.discount.findMany({
       where: {
         deviceId: {
@@ -27,10 +20,7 @@ export class CalculateDiscount
     });
 
     if (discounts.length === 0) {
-      return {
-        statusCode: 200,
-        data: 0,
-      };
+      return successResult(0);
     }
 
     let totalDiscount = 0;
@@ -52,10 +42,7 @@ export class CalculateDiscount
       );
     });
 
-    return {
-      statusCode: 200,
-      data: totalDiscount,
-    };
+    return successResult(totalDiscount);
   }
 
   findBestDiscount(
