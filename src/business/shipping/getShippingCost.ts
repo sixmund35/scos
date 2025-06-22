@@ -24,7 +24,7 @@ export class GetShippingCost
 {
   constructor(
     @inject(GetAllWarehouseByDeviceId)
-    private readonly getAllWarehouse: GetAllWarehouseByDeviceId,
+    private readonly getAllWarehouseByDeviceId: GetAllWarehouseByDeviceId,
     @inject(GetAllShippingRate)
     private readonly getAllShippingRates: GetAllShippingRate,
   ) {}
@@ -36,7 +36,7 @@ export class GetShippingCost
     let totalShippingCost = 0;
 
     for (const item of request.items) {
-      const warehouses = await this.getAllWarehouse.execute({
+      const warehouses = await this.getAllWarehouseByDeviceId.execute({
         deviceId: item.deviceId,
       });
 
