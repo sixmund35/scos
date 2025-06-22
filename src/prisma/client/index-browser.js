@@ -130,6 +130,64 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.DeviceScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  weight: 'weight',
+  weightUnit: 'weightUnit',
+  price: 'price',
+  currency: 'currency'
+};
+
+exports.Prisma.WarehouseScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  lat: 'lat',
+  lng: 'lng',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.DiscountScalarFieldEnum = {
+  id: 'id',
+  minimumQuantity: 'minimumQuantity',
+  type: 'type',
+  deviceId: 'deviceId',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  amount: 'amount'
+};
+
+exports.Prisma.StockScalarFieldEnum = {
+  quantity: 'quantity',
+  deviceId: 'deviceId',
+  warehouseId: 'warehouseId'
+};
+
+exports.Prisma.ShippingRateScalarFieldEnum = {
+  id: 'id',
+  price: 'price',
+  type: 'type',
+  currency: 'currency'
+};
+
+exports.Prisma.OrderScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  status: 'status',
+  discount: 'discount',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.OrderLineScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  deviceId: 'deviceId',
+  quantity: 'quantity',
+  price: 'price'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -140,9 +198,21 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 
 exports.Prisma.ModelName = {
-  User: 'User'
+  User: 'User',
+  Device: 'Device',
+  Warehouse: 'Warehouse',
+  Discount: 'Discount',
+  Stock: 'Stock',
+  ShippingRate: 'ShippingRate',
+  Order: 'Order',
+  OrderLine: 'OrderLine'
 };
 
 /**

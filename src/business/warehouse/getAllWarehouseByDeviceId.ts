@@ -1,0 +1,49 @@
+import type { IAsyncOperation, IResult } from '@/core/interfaces/iOperation';
+import type { WarehouseResponse } from '../../dtos/warehouse/warehouse.response';
+import { inject, injectable } from 'inversify';
+import { Repository } from '@/core/repository';
+
+@injectable('Request')
+export class GetAllWarehouseByDeviceId
+  implements IAsyncOperation<{ deviceId: number }, WarehouseResponse[]>
+{
+  constructor(@inject(Repository) private readonly repository: Repository) {}
+
+  async execute(data: {
+    deviceId: number;
+  }): Promise<IResult<WarehouseResponse[]>> {
+    const warehouses = await this.repository.warehouse.findMany({
+      where: {
+        Stock: {
+          some: {
+            deviceId: data.deviceId,
+          },
+        },
+      },
+      include: {
+        Stock: {
+          select: {
+            deviceId: true,
+            quantity: true,
+          },
+        },
+      },
+    });
+
+    const result = warehouses.map(warehouse => ({
+      id: warehouse.id,
+      name: warehouse.name,
+      lat: warehouse.lat,
+      lng: warehouse.lng,
+      stock: warehouse.Stock.find(stock => ({
+        deviceId: stock.deviceId,
+        quantity: stock.quantity,
+      }))!,
+    }));
+
+    return {
+      statusCode: 200,
+      data: result,
+    };
+  }
+}

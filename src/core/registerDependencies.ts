@@ -11,6 +11,6 @@ export const registerDependencies = async (): Promise<void> => {
 };
 
 export const resolveDependency = (identifier: ServiceIdentifier) => {
-  const deps = container.get(identifier, { autobind: true });
-  return deps;
+  const dependency = container.get(identifier, { autobind: true });
+  return dependency;
 };

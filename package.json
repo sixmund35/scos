@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "preparsdsddsde": "chmod +x ./scripts/prepare.sh && ./scripts/prepare.sh",
+    "prepare": "chmod +x ./scripts/prepare.sh && ./scripts/prepare.sh",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write .",
     "start": "bun index.ts",
@@ -12,7 +12,7 @@
     "db:generate": "bunx prisma generate",
     "db:migrate": "bunx prisma migrate dev",
     "db:deploy": "bunx prisma deploy",
-    "prepare": "husky"
+    "db:seed": "bun prisma/seed.ts"
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",
@@ -36,8 +36,11 @@
     "@prisma/extension-accelerate": "^2.0.1",
     "cors": "^2.8.5",
     "express": "^5.1.0",
+    "geolib": "^3.3.4",
     "inversify": "^7.0.0-alpha.5",
     "pg": "^8.16.2",
-    "reflect-metadata": "^0.2.2"
+    "prisma-class-generator": "^0.2.11",
+    "reflect-metadata": "^0.2.2",
+    "zod": "^3.25.67"
   }
 }

@@ -16,6 +16,91 @@ model User {
   age        Int
   createdAt  DateTime @default(now()) @map("created_at")
   updatedAt  DateTime @updatedAt @map("updated_at")
+  Order      Order[]
 
   @@map("users")
+}
+
+model Device {
+  id         Int         @id @default(autoincrement())
+  name       String      @db.VarChar(300)
+  weight     Int
+  weightUnit Int         @map("weight_unit")
+  price      Float
+  currency   Int
+  Discount   Discount[]
+  Stock      Stock[]
+  OrderLine  OrderLine[]
+
+  @@map("devices")
+}
+
+model Warehouse {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(300)
+  lat       Float
+  lng       Float
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  Stock     Stock[]
+
+  @@map("warehouses")
+}
+
+model Discount {
+  id              Int       @id @default(autoincrement())
+  minimumQuantity Int       @map("minimum_quantity")
+  type            Int       @map("type")
+  deviceId        Int       @map("device_id")
+  device          Device    @relation(fields: [deviceId], references: [id])
+  startDate       DateTime? @map("start_date")
+  endDate         DateTime? @map("end_date")
+  amount          Float
+
+  @@map("discounts")
+}
+
+model Stock {
+  quantity    Int
+  deviceId    Int       @map("device_id")
+  warehouseId Int       @map("warehouse_id")
+  device      Device    @relation(fields: [deviceId], references: [id])
+  warehouse   Warehouse @relation(fields: [warehouseId], references: [id])
+
+  @@id([deviceId, warehouseId])
+  @@map("stocks")
+}
+
+model ShippingRate {
+  id       Int   @id @default(autoincrement())
+  price    Float
+  type     Int
+  currency Int
+
+  @@map("shipping_rates")
+}
+
+model Order {
+  id        Int         @id @default(autoincrement())
+  userId    Int         @map("user_id")
+  user      User        @relation(fields: [userId], references: [id])
+  status    Int
+  discount  Float
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
+  OrderLine OrderLine[]
+
+  @@map("orders")
+}
+
+model OrderLine {
+  id       Int    @id @default(autoincrement())
+  orderId  Int    @map("order_id")
+  order    Order  @relation(fields: [orderId], references: [id])
+  deviceId Int    @map("device_id")
+  device   Device @relation(fields: [deviceId], references: [id])
+  quantity Int
+  price    Float
+
+  @@map("order_lines")
 }
